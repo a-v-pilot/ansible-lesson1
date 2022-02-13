@@ -1,0 +1,23 @@
+---
+- name: Task_1
+  hosts: node1.example.com
+
+  tasks:
+  - name: Install latest httpd
+    package: name=httpd state=latest
+
+  - name: Start httpd
+    service: name=httpd state=started
+
+  - name: Check httpd status
+    service_facts:
+  - name: Print httpd status
+    debug: var=ansible_facts.services['httpd.service'].state
+
+  - name: Create file index.html with content
+    copy:
+      dest: /var/www/html/index.html
+      content: 'Welcome to my web server'
+  
+  - name: Permit traffic on port 80/tcp
+    firewalld: port=80/tcp permanent=yes state=enabled

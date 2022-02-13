@@ -1,0 +1,21 @@
+---
+- name: Task_2
+  hosts: node1.example.com
+
+
+  tasks:
+  - name: Delete httpd
+    package:
+      name: httpd
+      state: absent
+
+  - name: Delete file index.html
+    file:
+      path: /var/www/html/index.html
+      state: absent
+  
+  - name: Deny traffic on port 80/tcp
+    firewalld:
+      port: 80/tcp
+      permanent: yes
+      state: disabled

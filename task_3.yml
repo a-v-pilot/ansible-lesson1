@@ -1,0 +1,16 @@
+---
+- name: Task_3
+  hosts: node1.example.com
+
+
+  tasks:
+  - name: Add parameters to grub
+    lineinfile:
+      path: /etc/default/grub
+      state: present
+      backrefs: yes
+      regexp: '^(GRUB_CMDLINE_LINUX=(?!.* {{ item.property }})\"[^\"]+)(\".*)'
+      line: '\1 {{ item.property }}={{ item.value  }}\2'
+    with_items:
+      - { property: 'net.ifnames', value: '0' }
+      - { property: 'biosdevname', value: '0' }
