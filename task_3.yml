@@ -10,7 +10,7 @@
       state: present
       backrefs: yes
       regexp: '^(GRUB_CMDLINE_LINUX=(?!.* {{ item.property }})\"[^\"]+)(\".*)'
-      line: '\1 {{ item.property }}={{ item.value  }}\2'
+      line: '\1 {{ item.property }}={{ item.value }}\2'
     with_items:
       - { property: 'net.ifnames', value: '0' }
       - { property: 'biosdevname', value: '0' }
